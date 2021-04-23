@@ -42,10 +42,12 @@ test('throws warning with unexpected props', () => {
 });
 
 describe('state controlled input field', () => {
-    test('state updates with value of input box upon change', () =>{
-        const mockSetCurrentGuess = jest.fn();
+    const mockSetCurrentGuess = jest.fn();
+    beforeEach(() => {        
         React.useState = jest.fn(() => ['', mockSetCurrentGuess]); 
-
+    })
+    test('state updates with value of input box upon change', () =>{
+        
         const wrapper = setup();
         const inputBox = findByTestAttr(wrapper, 'input-box');
 
@@ -53,5 +55,16 @@ describe('state controlled input field', () => {
         inputBox.simulate('change', mockEvent);
 
         expect(mockSetCurrentGuess).toHaveBeenCalledWith('train');
+     })
+
+     test('state updates with empty value when button is clicked', () =>{
+        
+        const wrapper = setup();
+        const submitButton = findByTestAttr(wrapper, 'submit-button');
+
+        const mockEvent = { target: { value: '' }};
+        submitButton.simulate('click', mockEvent);
+
+        expect(mockSetCurrentGuess).toHaveBeenCalledWith('');
      })
 })

@@ -16,7 +16,7 @@ const Input = ({ secretWord }) => {
                 />
                 <button 
                 data-test="submit-button"
-                onClick={(event) => {event.preventDefault();}}
+                onClick={(event) => setCurrentGuess(event.target.value)}
                 className="btn btn-primary mb-2">
                     Submit
                 </button>
