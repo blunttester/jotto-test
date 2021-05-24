@@ -5,6 +5,14 @@ import checkPropTypes from 'check-prop-types';
 import { findByTestAttr, checkProps } from '../test/testUtils';
 import Input from './input';
 
+const mockSetCurrentGuess = jest.fn();
+jest.mock('react', () => ({
+    ...jest.requireActual('react'),
+    useState: (initialState) => [initialState, mockSetCurrentGuess]
+}));
+ 
+    
+
 const defaultProps = {
     secretWord: ''
 }
@@ -42,10 +50,7 @@ test('throws warning with unexpected props', () => {
 });
 
 describe('state controlled input field', () => {
-    const mockSetCurrentGuess = jest.fn();
-    beforeEach(() => {        
-        React.useState = jest.fn(() => ['', mockSetCurrentGuess]); 
-    })
+    
     test('state updates with value of input box upon change', () =>{
         
         const wrapper = setup();
